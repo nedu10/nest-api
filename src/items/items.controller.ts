@@ -28,8 +28,8 @@ export class ItemsController {
     return this.itemsServices.findAll();
   }
   @Get(':id')
-  findOne(@Param() param): string {
-    return `item ${param.id}`;
+  findOne(@Param() param): Item {
+    return this.itemsServices.findOne(param.id);
   }
   @Delete(':id')
   delete(@Param('id') id): string {
