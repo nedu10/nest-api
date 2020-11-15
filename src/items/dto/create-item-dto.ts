@@ -3,3 +3,5 @@ export class CreateItemDto {
   readonly qty: number;
   readonly desc: string;
 }
+
+//Dto -- data transfer object
