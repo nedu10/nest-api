@@ -9,7 +9,7 @@ import configs from './configs/keys';
 
 @Module({
   imports: [ItemsModule, MongooseModule.forRoot(configs.MongoURI)],
-  controllers: [AppController, ItemsController],
-  providers: [AppService, ItemsService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

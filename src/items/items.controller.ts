@@ -12,7 +12,7 @@ import {
 import { CreateItemDto } from './dto/create-item-dto';
 import { Request, Response } from 'express';
 import { ItemsService } from './items.service';
-import { Item } from './interfaces/item.interface';
+import { IItem } from './interfaces/item.interface';
 
 @Controller('items') // Note this is a class decorator
 export class ItemsController {
@@ -24,12 +24,12 @@ export class ItemsController {
   //     return res.send('This is to get all items');
   //   }
   @Get()
-  findAll(): Item[] {
-    return this.itemsServices.findAll();
+  async findAll(): Promise<IItem[]> {
+    return await this.itemsServices.findAll();
   }
   @Get(':id')
-  findOne(@Param() param): Item {
-    return this.itemsServices.findOne(param.id);
+  async findOne(@Param() param): Promise<IItem> {
+    return await this.itemsServices.findOne(param.id);
   }
   @Delete(':id')
   delete(@Param('id') id): string {
@@ -40,7 +40,7 @@ export class ItemsController {
     return `updating ${id} to ${updateItemDto.name} - ${updateItemDto.qty} - ${updateItemDto.desc}`;
   }
   @Post()
-  createItem(@Body() createItemDto: CreateItemDto): string {
-    return `this is a string ${createItemDto.qty}`;
+  async createItem(@Body() createItemDto: CreateItemDto): Promise<IItem> {
+    return await this.itemsServices.create(createItemDto);
   }
 }
