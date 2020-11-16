@@ -35,4 +35,10 @@ export class ItemsService {
     const new_item = new this.itemModel(item);
     return await new_item.save();
   }
+  async update(id: string, item: IItem): Promise<ItemDocument> {
+    return await this.itemModel.findByIdAndUpdate(id, item, { new: true });
+  }
+  async delete(id: string): Promise<ItemDocument> {
+    return await this.itemModel.findByIdAndRemove(id);
+  }
 }

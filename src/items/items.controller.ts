@@ -13,6 +13,7 @@ import { CreateItemDto } from './dto/create-item-dto';
 import { Request, Response } from 'express';
 import { ItemsService } from './items.service';
 import { IItem } from './interfaces/item.interface';
+import { ItemDocument } from './schemas/item.schema';
 
 @Controller('items') // Note this is a class decorator
 export class ItemsController {
@@ -32,12 +33,15 @@ export class ItemsController {
     return await this.itemsServices.findOne(param.id);
   }
   @Delete(':id')
-  delete(@Param('id') id): string {
-    return `Deleted ${id}`;
+  delete(@Param('id') id): Promise<IItem> {
+    return this.itemsServices.delete(id);
   }
   @Put(':id')
-  updateItem(@Body() updateItemDto: CreateItemDto, @Param('id') id): string {
-    return `updating ${id} to ${updateItemDto.name} - ${updateItemDto.qty} - ${updateItemDto.desc}`;
+  updateItem(
+    @Body() updateItemDto: CreateItemDto,
+    @Param('id') id,
+  ): Promise<IItem> {
+    return this.itemsServices.update(id, updateItemDto);
   }
   @Post()
   async createItem(@Body() createItemDto: CreateItemDto): Promise<IItem> {
